@@ -16,14 +16,11 @@ ready = function () {
 };
 
 intent_handler = function (intent) {
-    if (intent_handler_timer !== undefined) {
-        clearTimeout(intent_handler_timer);
-    }
-
     var _calendar_extras = {};
     if (typeof (intent.action) === "string"
             && intent.action === "android.intent.action.MAIN") {
-        // 單純開啟日曆
+        // 沒有要檢索的東西，回家吧。
+        navigator.app.exitApp();
     }
 
     if (typeof (intent.extras) === "object") {
@@ -81,5 +78,3 @@ intent_handler = function (intent) {
     window.open(_navigation_url, "_system");
     navigator.app.exitApp();
 };
-
-intent_handler_timer = undefined;
