@@ -1,3 +1,4 @@
+
 intent_handler = function (intent) {
     //alert("可以嗎？");
     if (typeof (intent.action) === "string"
