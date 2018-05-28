@@ -1,8 +1,10 @@
 body {
-    background-image: url(img/loading.svg);
+    background-color: black;
+    /*background-image: url(img/loading.svg);
     background-repeat: no-repeat;
     background-position-x: center;
     background-position-y: center;
     height: 100vh;
     width: 100vw;
+    */
 }
