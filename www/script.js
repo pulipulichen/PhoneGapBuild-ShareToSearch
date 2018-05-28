@@ -16,65 +16,45 @@ ready = function () {
 };
 
 intent_handler = function (intent) {
-    var _calendar_extras = {};
+    //alert("可以嗎？");
     if (typeof (intent.action) === "string"
             && intent.action === "android.intent.action.MAIN") {
         // 沒有要檢索的東西，回家吧。
+        //alert("空空");
         navigator.app.exitApp();
     }
 
+    var _search_items = [];
+    
+    var _has_string = function (_item) {
+        return (typeof(_item) === "string"
+                && _item.trim() !== "");
+    };
+    
     if (typeof (intent.extras) === "object") {
         var _extras = intent.extras;
-        if (typeof (_extras["android.intent.extra.SUBJECT"]) === "string") {
-            _calendar_extras.title = _extras["android.intent.extra.SUBJECT"];
+        if (_has_string(_extras["android.intent.extra.SUBJECT"])) {
+            _search_items.push(_extras["android.intent.extra.SUBJECT"].trim());
         }
-        if (typeof (_extras["android.intent.extra.TEXT"]) === "string") {
-            _calendar_extras.description = _extras["android.intent.extra.TEXT"];
-        }
-    }
-
-    if (typeof (_calendar_extras.title) === "undefined"
-            && typeof (_calendar_extras.description) === "string") {
-        _calendar_extras.title = _calendar_extras.description;
-        delete _calendar_extras.description;
-    }
-
-    // 對付feedly的操作
-    if (typeof (_calendar_extras.title) === "string"
-            && typeof (_calendar_extras.description) === "undefined") {
-        var _title = _calendar_extras.title.trim();
-        var _last_space = _title.lastIndexOf(" ");
-        var _last_segment = _title.substring(_last_space + 1, _title.length).trim();
-        if (_last_segment.substr(0, 7) === "http://"
-                || _last_segment.substr(0, 8) === "https://") {
-            // 是feedly模式
-            _calendar_extras.title = _title.substr(0, _last_space);
-            _calendar_extras.description = _last_segment;
+        if (_has_string(_extras["android.intent.extra.TEXT"])) {
+            _search_items.push(_extras["android.intent.extra.TEXT"].trim());
         }
     }
     
-    //alert(_search);
-    var _navigation_url = "https://www.google.com/maps?api=1";
-    if (typeof(_calendar_extras.title) === "string") {
-        var _search = _calendar_extras.title;
-
-        if (_search !== undefined 
-                    && _search.indexOf("pgfu") > -1 
-                    && _search.indexOf("n.tw") > -1) {
-                //alert(decodeURIComponent(_search));
-                _search = "?" + decodeURIComponent(_search).split("?")[1];
-
-                var _lat = getQueryVariable("lat", _search);
-                var _lon = getQueryVariable("lon", _search);
-                _search = _lat + "," + _lon;
+    if (_search_items.length > 0) {
+        if (_search_items.length === 1
+                && (_search_items[0].startsWith("http://") || _search_items[0].startsWith("https://"))) {
+            //alert(encodeURIComponent(_search_items[0]));
+            window.open(_search_items[0], "_system");    
         }
         else {
-            _search = encodeURIComponent(_search);
+            var _url = "https://www.google.com/search?q=" + encodeURIComponent(_search_items.join(" "));
+            window.open(_url, "_system");    
         }
-
-        _navigation_url = "https://www.google.com/maps/dir/?api=1&destination=" + _search;
-        //alert(_navigation_url);
     }
-    window.open(_navigation_url, "_system");
+    //alert([JSON.stringify(_search_items)
+    //    , _search_items.length === 1
+    //    , _search_items[0].startsWith("http://") 
+    //    , _search_items[0].startsWith("https://")]);
     navigator.app.exitApp();
 };
