@@ -1,4 +1,3 @@
-
 intent_handler = function (intent) {
     //alert("可以嗎？");
     if (typeof (intent.action) === "string"
@@ -9,12 +8,12 @@ intent_handler = function (intent) {
     }
 
     var _search_items = [];
-    
+
     var _has_string = function (_item) {
-        return (typeof(_item) === "string"
+        return (typeof (_item) === "string"
                 && _item.trim() !== "");
     };
-    
+
     if (typeof (intent.extras) === "object") {
         var _extras = intent.extras;
         if (_has_string(_extras["android.intent.extra.SUBJECT"])) {
@@ -24,16 +23,48 @@ intent_handler = function (intent) {
             _search_items.push(_extras["android.intent.extra.TEXT"].trim());
         }
     }
+
+    var _test_url = _search_items.join(" ");
+    var _url_list = [];
     
+    var _http_list = _test_url.split("http://");
+    for (var _i = 0; _i < _http_list.length; _i++) {
+        var item = _http_list[_i];
+        var pos = item.indexOf(" ");
+        if (pos === -1) {
+            pos = item.length;
+        }
+        _url_list.push(item.substring(0, pos));
+    }
+
+    var _https_list = _test_url.split("https://");
+    for (var _i = 0; _i < _https_list.length; _i++) {
+        var item = _https_list[_i];
+        var pos = item.indexOf(" ");
+        if (pos === -1) {
+            pos = item.length;
+        }
+        _url_list.push(item.substring(0, pos));
+    }
+
+    alert(JSON.stringify(_url_list));
+    if (_url_list.length > 0) {
+        for (var i = 0; i < _url_list.length; i++) {
+            window.open(_url_list[i], "_system");
+        }
+        navigator.app.exitApp();
+        return;
+
+    }
+
     if (_search_items.length > 0) {
         if (_search_items.length === 1
                 && (_search_items[0].startsWith("http://") || _search_items[0].startsWith("https://"))) {
             //alert(encodeURIComponent(_search_items[0]));
-            window.open(_search_items[0], "_system");    
-        }
-        else {
+            window.open(_search_items[0], "_system");
+        } else {
             var _url = "https://www.google.com/search?q=" + encodeURIComponent(_search_items.join(" "));
-            window.open(_url, "_system");    
+            window.open(_url, "_system");
         }
     }
     //alert([JSON.stringify(_search_items)
