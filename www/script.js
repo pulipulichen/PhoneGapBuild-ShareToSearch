@@ -41,6 +41,29 @@ intent_handler = function (intent) {
         }
     }
     
+    var _test_url = _search_items.join(" ");
+    var _url = null;
+    if (_test_url.indexOf("http://") > -1) {
+        var _pos = _test_url.indexOf("http://");
+        var _pos2 = _test_url.indexOf(" ", _pos);
+        if (_pos2 === -1) {
+            _pos2 = _test_url.length;
+        }
+        _url = _test_url.substring(_pos, _pos2);
+    }
+    else if (_test_url.indexOf("https://") > -1) {
+        var _pos = _test_url.indexOf("https://");
+        var _pos2 = _test_url.indexOf(" ", _pos);
+        if (_pos2 === -1) {
+            _pos2 = _test_url.length;
+        }
+        _url = _test_url.substring(_pos, _pos2);
+    }
+    
+    if (_url !== null) {
+        _search_items = [_url];
+    }
+    
     if (_search_items.length > 0) {
         if (_search_items.length === 1
                 && (_search_items[0].startsWith("http://") || _search_items[0].startsWith("https://"))) {
