@@ -42,31 +42,41 @@ intent_handler = function (intent) {
     }
 
     var _test_url = _search_items.join(" ");
+    _test_url = _test_url.split("\n").join(" ");
     var _url_list = [];
     
     var _http_list = _test_url.split("http://");
-    for (var _i = 0; _i < _http_list.length; _i++) {
+    for (var _i = 1; _i < _http_list.length; _i++) {
         var item = _http_list[_i];
         var pos = item.indexOf(" ");
         if (pos === -1) {
-            pos = item.length;
+            pos = item.indexOf("\n");
         }
-        _url_list.push(item.substring(0, pos));
-    }
-
-    var _https_list = _test_url.split("https://");
-    for (var _i = 0; _i < _https_list.length; _i++) {
-        var item = _https_list[_i];
-        var pos = item.indexOf(" ");
         if (pos === -1) {
             pos = item.length;
         }
-        _url_list.push(item.substring(0, pos));
+        _url_list.push("http://" + item.substring(0, pos));
     }
 
+    var _https_list = _test_url.split("https://");
+    for (var _i = 1; _i < _https_list.length; _i++) {
+        var item = _https_list[_i];
+        var pos = item.indexOf(" ");
+        if (pos === -1) {
+            pos = item.indexOf("\n");
+        }
+        if (pos === -1) {
+            pos = item.length;
+        }
+        _url_list.push("https://" + item.substring(0, pos));
+    }
+
+    //alert(JSON.stringify(_url_list));
     if (_url_list.length > 0) {
         for (var i = 0; i < _url_list.length; i++) {
-            window.open(_url_list[i], "_system");
+            setTimeout(function () {
+                window.open(_url_list[i], "_system");
+            }, 0);
         }
         navigator.app.exitApp();
         return;
@@ -89,3 +99,4 @@ intent_handler = function (intent) {
     //    , _search_items[0].startsWith("https://")]);
     navigator.app.exitApp();
 };
+
