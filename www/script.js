@@ -42,27 +42,37 @@ intent_handler = function (intent) {
     }
     
     var _test_url = _search_items.join(" ");
-    var _url = null;
-    if (_test_url.indexOf("http://") > -1) {
-        var _pos = _test_url.indexOf("http://");
-        var _pos2 = _test_url.indexOf(" ", _pos);
-        if (_pos2 === -1) {
-            _pos2 = _test_url.length;
+    var _url_list = [];
+    var _http_list = _test_url.split("http://");
+    for (var _i = 0; _i < _http_list.length; _i++)
+    {
+        var item = _http_list[_i];
+        var pos = item.indexOf(" ");
+        if (pos === -1) {
+            pos = item.length;
+            }
+        _url_list.push(item.substring(0, pos));
         }
-        _url = _test_url.substring(_pos, _pos2);
-    }
-    else if (_test_url.indexOf("https://") > -1) {
-        var _pos = _test_url.indexOf("https://");
-        var _pos2 = _test_url.indexOf(" ", _pos);
-        if (_pos2 === -1) {
-            _pos2 = _test_url.length;
-        }
-        _url = _test_url.substring(_pos, _pos2);
-    }
     
-    if (_url !== null) {
-        _search_items = [_url];
-    }
+    var _https_list = _test_url.split("https://");
+    for (var _i = 0; _i < _https_list.length; _i++)
+    {
+        var item = _https_list[_i];
+        var pos = item.indexOf(" ");
+        if (pos === -1) {
+            pos = item.length;
+            }
+        _url_list.push(item.substring(0, pos));
+        }
+    
+    if (_url_list.length > 0) {
+        for (i = 0; i < _url_list.length; i++) {
+            window.open(_url_list[i], "_system");    
+        }
+        navigator.app.exitApp();
+        return;
+            
+        }
     
     if (_search_items.length > 0) {
         if (_search_items.length === 1
