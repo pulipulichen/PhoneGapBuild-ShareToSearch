@@ -57,9 +57,9 @@ intent_handler = function (intent) {
     //alert(JSON.stringify(_url_list));
     if (_url_list.length > 0) {
         for (var i = 0; i < _url_list.length; i++) {
-            setTimeout(function () {
+            //setTimeout(function () {
                 window.open(_url_list[i], "_system");
-            }, 0);
+            //}, 0);
         }
         navigator.app.exitApp();
         return;
