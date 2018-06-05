@@ -44,7 +44,7 @@ PhoneGap Build Configuration
     
     <platform name="android">
         <config-file target="AndroidManifest.xml" parent="/manifest/application/activity">
-            <intent-filter android:label="test">
+            <intent-filter android:label="🔍 Web">
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.SEND" />
                 <action android:name="android.intent.action.PROCESS_TEXT" />
