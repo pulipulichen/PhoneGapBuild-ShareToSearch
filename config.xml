@@ -42,9 +42,6 @@ PhoneGap Build Configuration
     <!-- https://github.com/napolitano/cordova-plugin-intent -->
     <plugin spec="https://github.com/napolitano/cordova-plugin-intent.git" source="git" />
     
-    <!-- https://github.com/Logicify/cordova-plugin-file-opener -->
-    <plugin spec="https://github.com/Logicify/cordova-plugin-file-opener.git" source="git" />
-    
     <preference name="BackgroundColor" value="0x00000000"/>
     <platform name="android">
         <edit-config file="AndroidManifest.xml"
