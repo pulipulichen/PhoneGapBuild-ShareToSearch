@@ -33,6 +33,7 @@ intent_handler = function (intent) {
             && intent.action === "android.intent.action.MAIN") {
         // 沒有要檢索的東西，回家吧。
         //alert("空空");
+        openActivity();
         navigator.app.exitApp();
     }
 
@@ -134,14 +135,7 @@ intent_handler = function (intent) {
                 //url: _search_text,
                 //pacakge: "com.google.android.googlequicksearchbox",
                 extras: {
-                    //"android.intent.extra.SUBJECT": _search_text,
-                    //"android.intent.extra.TEXT": _search_text,
-                    //"ACTION_MSG": 1,
-                    //"ACTION_MSG": 1,
                     "query": _search_text,
-                    //"SearchManager": {
-                    //    "QUERY": _search_text,
-                    //}
                 }
             };
 
@@ -160,10 +154,36 @@ intent_handler = function (intent) {
             }
         }
     }
+    else {
+        openActivity();
+    }
     //alert([JSON.stringify(_search_items)
     //    , _search_items.length === 1
     //    , _search_items[0].startsWith("http://") 
     //    , _search_items[0].startsWith("https://")]);
 
     //navigator.app.exitApp();
+};
+
+
+openActivity = function () {
+    var _config = {
+        action: "android.intent.action.WEB_SEARCH",
+        extras: {
+            "query": "",
+        }
+    };
+
+    try {
+        window.plugins.webintent.startActivity(_config,
+                function () {
+                    navigator.app.exitApp();
+                },
+                function () {
+                    navigator.app.exitApp();
+                }
+        );
+    } catch (e) {
+        alert(e);
+    }
 };

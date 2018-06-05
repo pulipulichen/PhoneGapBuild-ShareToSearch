@@ -11,6 +11,3 @@ Android APP for open google search via sharing.
 # Reference
 - Main icon: http://www.iconninja.com/internet-search-icon-337574
 - Share icon: http://www.iconninja.com/share-icon-160558
-
-# TODO
-- android.intent.action.PROCESS_TEXT 雖然可以用，但是取得的intent意義不明，還需要研究看看
