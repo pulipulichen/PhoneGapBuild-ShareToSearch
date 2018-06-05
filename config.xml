@@ -63,14 +63,6 @@ PhoneGap Build Configuration
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:mimeType="text/plain"/>
             </intent-filter>
-            <intent-filter android:label="🔍 Web2">
-                <action android:name="android.intent.action.VIEW" />
-                <action android:name="android.intent.action.SEND" />
-                <action android:name="android.intent.action.PROCESS_TEXT" />
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:mimeType="text/plain"/>
-            </intent-filter>
         </config-file>
     </platform>
 </widget>
