@@ -35,6 +35,7 @@ intent_handler = function (intent) {
         //alert("空空");
         openActivity();
         navigator.app.exitApp();
+        return;
     }
 
     var _search_items = [];
