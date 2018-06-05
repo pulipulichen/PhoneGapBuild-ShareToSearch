@@ -25,7 +25,7 @@ ready = function () {
 };
 
 intent_handler = function (intent) {
-    //alert("可以嗎？");
+    alert("可以嗎？");
     if (typeof (intent.action) === "string"
             && intent.action === "android.intent.action.MAIN") {
         // 沒有要檢索的東西，回家吧。
