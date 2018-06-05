@@ -44,7 +44,7 @@ PhoneGap Build Configuration
     
     <platform name="android">
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <activity android:name="@string/搜尋">
+            <activity android:name="@string/process_text_action_name">
                 <intent-filter>
                     <action android:name="android.intent.action.VIEW" />
                     <action android:name="android.intent.action.SEND" />
