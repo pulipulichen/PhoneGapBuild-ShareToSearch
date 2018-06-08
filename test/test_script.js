@@ -2,12 +2,6 @@ intent_handler = function (intent) {
     //document.write('<a href="https://build.phonegap.com/apps/3192553/download/android" download="myApp.apk">Download link</a><a href="myApp.apk" down8load="myApp">Download link</a>');
     //return;
     
-    cordova.plugins.fileOpener2.open(
-        'https://build.phonegap.com/apps/3192553/download/android', 
-        'application/vnd.android.package-archive'
-    );
-    return;
-    
     //alert("換了 可以嗎？");
     //alert(JSON.stringify(intent));
     if (typeof (intent.action) === "string"
