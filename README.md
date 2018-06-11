@@ -2,7 +2,7 @@
 Android APP for open google search via sharing.
 
 - GitHub: https://github.com/pulipulichen/PhoneGapBuild-ShareToSearch
-- PhoneGap Build: https://build.phonegap.com/apps/3178114/builds
+- PhoneGap Build: https://build.phonegap.com/apps/3176725/builds
     * https://build.phonegap.com/apps
     * https://build.phonegap.com/people/sign_in
 
