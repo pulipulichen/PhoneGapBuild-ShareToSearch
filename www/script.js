@@ -26,6 +26,10 @@ ready = function () {
     }
 };
 
+var FILTER_SUBJECT = [
+    "Text Scanner"
+];
+
 intent_handler = function (intent) {
     //alert("換了 可以嗎？");
     //alert(JSON.stringify(intent));
@@ -56,7 +60,18 @@ intent_handler = function (intent) {
 
         for (var _i = 0; _i < _key_list.length; _i++) {
             if (_has_string(_extras[_key_list[_i]])) {
-                _search_items.push(_extras[_key_list[_i]].trim());
+                var _subject = _extras[_key_list[_i]].trim();
+                for (var _i = 0; _i < FILTER_SUBJECT.length; _i++) {
+                    var _needle = FILTER_SUBJECT[_i];
+                    if (_subject === _needle) {
+                        //_text = _text.substring(_needle.length, _text.length).trim();
+                        _subject = null;
+                        break;
+                    }
+                }
+                if (null !== _subject) {
+                    _search_items.push(_subject);
+                }
             }
         }
         /*
