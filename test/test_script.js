@@ -1,14 +1,14 @@
 intent_handler = function (intent) {
-    //document.write('<a href="https://build.phonegap.com/apps/3192553/download/android" download="myApp.apk">Download link</a><a href="myApp.apk" down8load="myApp">Download link</a>');
-    //return;
-    
     //alert("換了 可以嗎？");
-    //alert(JSON.stringify(intent));
+    alert(JSON.stringify(intent));
+    
     if (typeof (intent.action) === "string"
             && intent.action === "android.intent.action.MAIN") {
         // 沒有要檢索的東西，回家吧。
         //alert("空空");
+        openActivity();
         navigator.app.exitApp();
+        return;
     }
 
     var _search_items = [];
@@ -29,7 +29,18 @@ intent_handler = function (intent) {
 
         for (var _i = 0; _i < _key_list.length; _i++) {
             if (_has_string(_extras[_key_list[_i]])) {
-                _search_items.push(_extras[_key_list[_i]].trim());
+                var _subject = _extras[_key_list[_i]].trim();
+                for (var _i = 0; _i < FILTER_SUBJECT.length; _i++) {
+                    var _needle = FILTER_SUBJECT[_i];
+                    if (_subject === _needle) {
+                        //_text = _text.substring(_needle.length, _text.length).trim();
+                        _subject = null;
+                        break;
+                    }
+                }
+                if (null !== _subject) {
+                    _search_items.push(_subject);
+                }
             }
         }
         /*
@@ -109,14 +120,7 @@ intent_handler = function (intent) {
                 //url: _search_text,
                 //pacakge: "com.google.android.googlequicksearchbox",
                 extras: {
-                    //"android.intent.extra.SUBJECT": _search_text,
-                    //"android.intent.extra.TEXT": _search_text,
-                    //"ACTION_MSG": 1,
-                    //"ACTION_MSG": 1,
                     "query": _search_text,
-                    //"SearchManager": {
-                    //    "QUERY": _search_text,
-                    //}
                 }
             };
 
@@ -135,10 +139,36 @@ intent_handler = function (intent) {
             }
         }
     }
+    else {
+        openActivity();
+    }
     //alert([JSON.stringify(_search_items)
     //    , _search_items.length === 1
     //    , _search_items[0].startsWith("http://") 
     //    , _search_items[0].startsWith("https://")]);
 
     //navigator.app.exitApp();
+};
+
+
+openActivity = function () {
+    var _config = {
+        action: "android.intent.action.WEB_SEARCH",
+        extras: {
+            "query": "",
+        }
+    };
+
+    try {
+        window.plugins.webintent.startActivity(_config,
+                function () {
+                    navigator.app.exitApp();
+                },
+                function () {
+                    navigator.app.exitApp();
+                }
+        );
+    } catch (e) {
+        alert(e);
+    }
 };
